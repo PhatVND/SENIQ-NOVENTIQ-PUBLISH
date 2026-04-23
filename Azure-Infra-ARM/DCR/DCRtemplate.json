@@ -1,0 +1,141 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionRules_Custom_DCR_name": {
+            "defaultValue": "Custom-DCR",
+            "type": "String"
+        },
+        "dataCollectionEndpoints_Logstash_DCE_externalid": {
+            "defaultValue": "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.Insights/dataCollectionEndpoints/<dce-name>",
+            "type": "String"
+        },
+        "workspaces_sentinel_law_externalid": {
+            "defaultValue": "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/microsoft.operationalinsights/workspaces/<law-name>",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2023-03-11",
+            "name": "[parameters('dataCollectionRules_Custom_DCR_name')]",
+            "location": "southeastasia",
+            "properties": {
+                "dataCollectionEndpointId": "[parameters('dataCollectionEndpoints_Logstash_DCE_externalid')]",
+                "streamDeclarations": {
+                    "Custom-CustomTable_CL": {
+                        "columns": [
+                            {
+                                "name": "TimeGenerated",
+                                "type": "datetime"
+                            },
+                            {
+                                "name": "EventTime",
+                                "type": "datetime"
+                            },
+                            {
+                                "name": "ClientIp",
+                                "type": "string"
+                            },
+                            {
+                                "name": "Hostname",
+                                "type": "string"
+                            },
+                            {
+                                "name": "RequestUri",
+                                "type": "string"
+                            },
+                            {
+                                "name": "Uri",
+                                "type": "string"
+                            },
+                            {
+                                "name": "Message",
+                                "type": "string"
+                            },
+                            {
+                                "name": "DetailedMessage",
+                                "type": "string"
+                            },
+                            {
+                                "name": "RuleId",
+                                "type": "string"
+                            },
+                            {
+                                "name": "RuleSetType",
+                                "type": "string"
+                            },
+                            {
+                                "name": "RuleSetVersion",
+                                "type": "string"
+                            },
+                            {
+                                "name": "Action",
+                                "type": "string"
+                            },
+                            {
+                                "name": "OperationName",
+                                "type": "string"
+                            },
+                            {
+                                "name": "InstanceId",
+                                "type": "string"
+                            },
+                            {
+                                "name": "TransactionId",
+                                "type": "string"
+                            },
+                            {
+                                "name": "PolicyId",
+                                "type": "string"
+                            },
+                            {
+                                "name": "PolicyScope",
+                                "type": "string"
+                            },
+                            {
+                                "name": "OriginalRequestUriWithArgs",
+                                "type": "string"
+                            },
+                            {
+                                "name": "FileDetails",
+                                "type": "string"
+                            },
+                            {
+                                "name": "LineDetails",
+                                "type": "string"
+                            },
+                            {
+                                "name": "DetailedData",
+                                "type": "dynamic"
+                            }
+                        ]
+                    }
+                },
+                "dataSources": {},
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[parameters('workspaces_sentinel_law_externalid')]",
+                            "name": "c02d4e2dffd745f7b10ee10b6613ab8b"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Custom-CustomTable_CL"
+                        ],
+                        "destinations": [
+                            "c02d4e2dffd745f7b10ee10b6613ab8b"
+                        ],
+                        "transformKql": "source",
+                        "outputStream": "Custom-CustomTable_CL"
+                    }
+                ]
+            }
+        }
+    ]
+}
