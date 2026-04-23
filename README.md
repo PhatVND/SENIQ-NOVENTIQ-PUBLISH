@@ -1,6 +1,6 @@
 # Azure Infrastructure Deployment Guide
 
-This guide explains how to deploy the required Data Collection Endpoint (DCE), Data Collection Rule (DCR), and Log Analytics Custom Table using a combination of ARM templates and the Azure Portal. 
+This guide explains how to deploy the required Data Collection Endpoint (DCE), Data Collection Rule (DCR), and Log Analytics Custom Table using the Azure Portal. 
 
 By following this guide, you will provision the necessary resources and collect the configuration values required to run the `send_waf_logs.py` script.
 
@@ -15,34 +15,17 @@ By following this guide, you will provision the necessary resources and collect 
 
 ## Step 1: Deploy Data Collection Endpoint (DCE)
 
-The DCE acts as the entry point for logs. We will deploy it using the provided ARM template (`DCEtemplate.json`).
+The DCE acts as the entry point for logs. We will create it directly through the Azure Portal.
 
-### Option A: Using Azure CLI
-1. Run the following Azure CLI command to deploy the DCE:
-   ```bash
-   az deployment group create \
-     --resource-group <Your-Resource-Group> \
-     --template-file Azure-Infra-ARM/DCE/DCEtemplate.json \
-     --parameters dceName="waf-logs-dce"
-   ```
-2. Once deployed, get the **Logs Ingestion URI** of the DCE and its **Resource ID**:
-   ```bash
-   az monitor data-collection endpoint show \
-     --resource-group <Your-Resource-Group> \
-     --name "waf-logs-dce" \
-     --query "{LogsIngestionURI:logsIngestion.endpoint, ResourceId:id}" -o table
-   ```
-
-### Option B: Using Azure Portal ("Deploy a custom template")
-1. In the Azure Portal, search for and select **Deploy a custom template**.
-2. Click **Build your own template in the editor**.
-3. Click **Load file** and upload `Azure-Infra-ARM/DCE/DCEtemplate.json`. Click **Save**.
-4. Select your Subscription, Resource group, and Location. Enter a name for `Dce Name` (e.g., `waf-logs-dce`).
+1. In the Azure Portal, search for and select **Data Collection Endpoints**.
+2. Click **+ Create** to create a new endpoint.
+3. Select your **Subscription** and **Resource Group**.
+4. Enter an **Endpoint name** (e.g., `waf-logs-dce`) and select your desired **Region**.
 5. Click **Review + create** and then **Create**.
-6. Once deployed, navigate to the newly created Data Collection Endpoint. From the **Overview** page, click **JSON View** (top right) to copy its **Resource ID**.
+6. Once deployed, navigate to the newly created Data Collection Endpoint. From the **Overview** page, copy its **Logs Ingestion URI**. (Optional: You can also copy its **Resource ID** by clicking **JSON View** on the top right, if needed for other configurations).
 
 ### 📝 Information to record from Step 1:
-* Copy the **Logs Ingestion URI** from the DCE Overview page (or CLI output). This is your `DCE_ENDPOINT` for the Python script.
+* Copy the **Logs Ingestion URI** from the DCE Overview page. This is your `DCE_ENDPOINT` for the Python script.
 
 ---
 
