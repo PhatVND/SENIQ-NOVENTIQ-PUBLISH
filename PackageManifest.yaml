@@ -1,0 +1,11 @@
+manifest:
+  - id: "SENIQ_Plugin_v1"
+    description: "SENIQ WAF Triage Agent v1 (Auto / MAD / IQR)"
+    type: CopilotAgent
+    path: "SENIQ_Plugin_v1"
+  - id: "SENIQ_WAF_Infra"
+    description: "DCE + DCR + CustomTable_CL for SENIQ ingestion"
+    type: AzureArmDeployment
+    path: "AzureResources"
+schema:
+  version: "1.0.0"
