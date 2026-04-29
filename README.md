@@ -119,22 +119,6 @@ After uploading the agent:
 
 ---
 
-## 🧪 Step 5 – Test the Agent
-
-1. Go to **Chat / Prompt**
-2. Select your agent
-3. Run a test prompt:
-
-```text
-Investigate recent WAF activity
-```
-
-### Expected behavior:
-
-* Agent queries `CustomTable_CL`
-* Processes logs
-* Returns analysis
-
 ---
 
 ## ⚠️ Troubleshooting
@@ -165,8 +149,6 @@ Deploy → Send Logs → Upload YAML → Enable Tools → Use Agent
 ---
 
 ## 💡 Notes
-
-* This solution is **NOT SaaS**
 * All resources run in the **customer’s Azure environment**
 * The agent is deployed manually via YAML
 
@@ -180,4 +162,3 @@ Once completed:
 * Agent can query and analyze data
 * Security Copilot becomes operational
 
-[1]: https://docs.fluentbit.io/manual/data-pipeline/outputs/azure_logs_ingestion?utm_source=chatgpt.com "Azure Logs Ingestion API | Fluent Bit: Official Manual"
